@@ -11,7 +11,7 @@ const Template = ({ title, desc1, desc2, image, formtype }) => {
         </h1>
         <p className="text-[1.125rem] leading[1.625rem] mt-4">
           <span className="text-richblack-100">{desc1}</span>
-          <span className="text-blue-100 italic">{desc2}</span>
+          <span className="text-primary italic"> {desc2}</span>
         </p>
 
         {formtype === "signup" ? <SignupForm /> : <LoginForm />}
@@ -22,7 +22,7 @@ const Template = ({ title, desc1, desc2, image, formtype }) => {
           src={frame}
           alt="pattern"
           loading="lazy"
-          className="relative w-11/12 max-w-[450px] mt-1 -right-[20%] h-[494px] w-[558px]"
+          className="relative max-w-[450px] mt-1 -right-[20%] h-[494px] w-[1000px]"
         />
 
         <img
@@ -31,7 +31,7 @@ const Template = ({ title, desc1, desc2, image, formtype }) => {
           width={558}
           height={404}
           loading="lazy"
-          className="absolute  top-[14%] right-28 h-[504px] "
+          className="absolute top-[17%] right-5"
         />
       </div>
     </div>

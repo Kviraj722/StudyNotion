@@ -8,7 +8,6 @@ import Tab from "../../common/Tab";
 import { setSignupData } from "../../../../src/slices/authSlice";
 import { sendOtp } from "../../../services/operations/authAPI";
 
-
 const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +46,7 @@ const SignupForm = () => {
     dispatch(setSignupData(signupData));
 
     dispatch(sendOtp(formdata.Email, navigate));
+    console.log("Form data", formdata.Email);
 
     setFormData({
       FirstName: "",
@@ -81,12 +81,10 @@ const SignupForm = () => {
 
         <div className="flex gap-x-4 mt-[20px]">
           <label className="w-full ">
-            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+            <p className="text-[0.875rem] ml-4 text-richblack-5 mb-1 leading-[1.375rem]">
               First Name
               <sup className="text-[#EF476F]"> *</sup>
             </p>
-            <br />
-
             <input
               required
               value={formdata.FirstName}
@@ -94,15 +92,14 @@ const SignupForm = () => {
               name="FirstName"
               type="text"
               onChange={changeHandler}
-              className="bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4 "
+              className="input input-bordered input-success w-full max-w-xs"
             />
           </label>
           <label className="w-full ">
-            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem] ml-4">
               Last Name
               <sup className="text-[#EF476F]"> *</sup>
             </p>
-            <br />
 
             <input
               required
@@ -111,7 +108,7 @@ const SignupForm = () => {
               name="lastName"
               type="text"
               onChange={changeHandler}
-              className="bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4"
+              className="input input-bordered input-success w-full max-w-xs"
             />
           </label>
         </div>
@@ -120,12 +117,10 @@ const SignupForm = () => {
 
         <div className="mt-[20px]">
           <label className="w-full ">
-            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+            <p className="text-[0.875rem] mb-1 ml-4 text-richblack-5 leading-[1.375rem]">
               Email
               <sup className="text-[#EF476F]"> *</sup>
             </p>
-            <br />
-
             <input
               required
               value={formdata.Email}
@@ -133,7 +128,7 @@ const SignupForm = () => {
               name="Email"
               type="Email"
               onChange={changeHandler}
-              className="bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-6"
+              className="input input-bordered input-success w-full max-w-xs"
             />
           </label>
         </div>
@@ -143,62 +138,61 @@ const SignupForm = () => {
         {/*password and change password */}
 
         <div className="w-full flex gap-x-4 mt-[18px]">
-          <label className="w-full ">
-            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+          <label className="w-full">
+            <p className="text-[0.875rem] ml-4 text-richblack-5 mb-1 leading-[1.375rem]">
               Password
               <sup className="text-[#EF476F]"> *</sup>
             </p>
-            <br />
+            <div className="relative">
+              <input
+                required
+                value={formdata.confirmPassword}
+                placeholder="Enter Password"
+                name="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                onChange={changeHandler}
+                className="relative input input-bordered input-success w-full max-w-xs"
+              />
 
-            <input
-              required
-              value={formdata.Password}
-              placeholder="Enter Password"
-              name="Password"
-              type={showPassword ? "text" : "password"}
-              onChange={changeHandler}
-              className="bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4 relative outline-none"
-            />
-
-            <span
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute left-[24.5%] right-1/3 top-[83%] bottom-1/3 cursor-pointer text-richblack-5"
-            >
-              {showPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
-            </span>
+              <span
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-[12px] top-4 cursor-pointer text-richblack-5 "
+              >
+                {setShowPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
+              </span>
+            </div>
           </label>
 
           <label className="w-full ">
-            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+            <p className="text-[0.875rem] ml-4 text-richblack-5 mb-1 leading-[1.375rem]">
               Confirm Password
               <sup className="text-[#EF476F]"> *</sup>
             </p>
-            <br />
+            <div className="relative">
+              <input
+                required
+                value={formdata.confirmPassword}
+                placeholder="Enter Password"
+                name="confirmPassword"
+                type={ConfirmPassword ? "text" : "password"}
+                onChange={changeHandler}
+                className="relative input input-bordered input-success w-full max-w-xs"
+              />
 
-            <input
-              required
-              value={formdata.confirmPassword}
-              placeholder="Enter Password"
-              name="confirmPassword"
-              type={ConfirmPassword ? "text" : "password"}
-              onChange={changeHandler}
-              className="relative bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4 outline-none"
-            />
-
-            <span
-              onClick={() => setConfirmPassword((prev) => !prev)}
-              className="absolute left-[40%] right-[30%] top-[83%] bottom-1/3 cursor-pointer text-richblack-5 "
-            >
-              {showPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
-            </span>
+              <span
+                onClick={() => setConfirmPassword((prev) => !prev)}
+                className="absolute right-[12px] top-4 cursor-pointer text-richblack-5 "
+              >
+                {setConfirmPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
+              </span>
+            </div>
           </label>
         </div>
 
         {/*button*/}
-
-        <button class="bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6 w-[444px] ">
-          Create Account
-        </button>
+        <div className="flex justify-center mt-10">
+          <button class="btn btn-wide btn-primary">Create Account</button>
+        </div>
       </form>
     </div>
   );

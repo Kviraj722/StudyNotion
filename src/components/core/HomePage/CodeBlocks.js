@@ -11,7 +11,6 @@ const CodeBlocks = ({
   ctabtn1,
   ctabtn2,
   codeblock,
-  backgroudGradient,
   codeColor,
 }) => {
   return (
@@ -55,7 +54,7 @@ const CodeBlocks = ({
           className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}
         >
           <TypeAnimation
-            sequence={[codeblock.text, 2000, ""]}
+            sequence={[codeblock, 2000, ""]}
             repeat={Infinity}
             cursor={true}
             style={{

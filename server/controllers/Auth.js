@@ -29,20 +29,17 @@ exports.sendOTP = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    console.log("Created OTP is ", otp);
-
-    let result = await OTP.findOne({ otp: otp });
-    console.log("Result in otp ", result);
+    //fetching result from the DataBase
+    const result = await OTP.findOne({ otp });
     while (result) {
       otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
       });
-      result = await OTP.findOne({ otp: otp });
     }
     //created an entry for otp
     const otpPayLoad = { email, otp };
     const otpBody = await OTP.create(otpPayLoad);
-    console.log(otpBody);
+    console.log("otp body ", otpBody);
     //return response successfull
     res.status(200).json({
       success: true,
@@ -53,7 +50,7 @@ exports.sendOTP = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       success: false,
-      message: error.message,
+      error: error.message,
     });
   }
 };
@@ -101,26 +98,25 @@ exports.signup = async (req, res) => {
         message: "User is already registered",
       });
     }
-    //find recent otp
-    const recentOtp = await OTP.find({ email })
-      .sort({ createdAt: -1 })
-      .limit(1);
 
-    console.log(recentOtp);
 
-    //validate otp
-    if (recentOtp.length == 0) {
+    const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+    console.log("response", response);
+    console.log("OTP", otp);
+
+    if (response.length === 0) {
+      // OTP not found for the email
       return res.status(400).json({
         success: false,
-        message: "otp not found",
+        message: "The OTP is not valid",
       });
-    } else if (otp != recentOtp[0].otp) {
+    } else if (otp !== response[0].otp) {
+      // Invalid OTP
       return res.status(400).json({
         success: false,
-        message: "Invalid otp",
+        message: "The OTP is not valid",
       });
     }
-
     //hashing the password
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -148,6 +144,7 @@ exports.signup = async (req, res) => {
 
     return res.status(200).json({
       success: true,
+      user,
       message: "User Created Successfully",
     });
   } catch (error) {

@@ -1,93 +1,88 @@
-import { useState } from 'react'
-import {AiFillEyeInvisible,AiOutlineEye} from "react-icons/ai"
-import {Link,useNavigate} from "react-router-dom"
-import { useDispatch } from 'react-redux'
-import { login } from '../../../services/operations/authAPI'
-
-
+import { useState } from "react";
+import { AiFillEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../../services/operations/authAPI";
 
 const LogInForm = () => {
-  const navigate=useNavigate();
-  const dispatch=useDispatch();
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const [formData,setFormData]=useState({
-        email:"",password:""
-    })
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-    const[showPassword,setShowPassword]=useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-    const changeHandler=(event)=>{
-          setFormData((prevdata)=>(
-            {
-                ...prevdata,
-                [event.target.name]:event.target.value,
-            }
+  const changeHandler = (event) => {
+    setFormData((prevdata) => ({
+      ...prevdata,
+      [event.target.name]: event.target.value,
+    }));
+  };
+  const { email, password } = formData;
 
-          ))  
-    }
-    const {email,password}=formData;
-
-    const submithandler=(event)=>{
-      event.preventDefault();
-      dispatch(login(email,password,navigate))
-    }
+  const submithandler = (event) => {
+    event.preventDefault();
+    dispatch(login(email, password, navigate));
+  };
   return (
-    <form className='flex flex-col w-full gap-y-4 mt-6' onSubmit={submithandler} >
-            
-            
-     
-       <label className='w-full '> 
-        <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>
-         Email Address
-          <sup className='text-[#EF476F]'> *</sup>
-         </p>
-         <br/>
+    <form
+      className="flex flex-col w-full gap-y-4 mt-6"
+      onSubmit={submithandler}
+    >
+      <label className="w-full ">
+        <p className="text-[0.875rem] text-richblack-5 mb-1 ml-4 leading-[1.375rem]">
+          Email Address
+          <sup className="text-[#EF476F]"> *</sup>
+        </p>
 
         <input
-            required
-            value={email}
-            placeholder='Enter Your Email'
-            name="email"
-            type="email"
-            onChange={changeHandler}
-            className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4 outline-none'
+          required
+          value={email}
+          placeholder="Enter Your Email"
+          name="email"
+          type="email"
+          onChange={changeHandler}
+          className="input input-bordered input-success w-full max-w-xs"
         />
-       </label>
-       
-       <label className='w-full relative'>
-        <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'> Password
-         <sup className='text-[#EF476F]'> *</sup> </p>
-        <br></br>
-        <input
-            required
-            value={password}
-            placeholder='Enter Password'
-            name="password"
-            type={showPassword ? ("text") : ("password")}
-            onChange={changeHandler}
-            className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] -mt-4 outline-none'
-
-        
-       />
-         <span onClick={()=>setShowPassword((prev)=>!prev)} className='absolute left-[90%] right-1/3 top-[52%] bottom-1/3 cursor-pointer text-richblack-5'>
-            {showPassword ? (<AiFillEyeInvisible/>) :(<AiOutlineEye/>) }
-        </span>
-       
-        <Link to="#">
-                <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
-                    Forgot Password
-                </p>
+      </label>
+      <div>
+        <label className="w-full relative">
+          <p className="text-[0.875rem] text-richblack-5 mb-1 ml-4 leading-[1.375rem]">
+            Password
+            <sup className="text-[#EF476F]"> *</sup>{" "}
+          </p>
+          <div className="relative">
+            <input
+              required
+              value={password}
+              placeholder="Enter Password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              onChange={changeHandler}
+              className="relative input input-bordered input-success w-full max-w-xs"
+            />
+            <span
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute top-4 right-6 left-[290px] cursor-pointer text-richblack-5"
+            >
+              {setShowPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
+            </span>
+            <Link to={"/forgot-password"}>
+              <p className="text-center text-sm ml-8 mt-3 text-primary-focus">Forgot Password?</p>
             </Link>
-       </label>
-        
-       <button 
-        type='submit'
-       class="bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6">
-         Sign In
+          </div>
+        </label>
+      </div>
+      <div className="flex justify-start mt-2">
+        <button type="submit" class="btn btn-wide btn-primary">
+          Sign In
         </button>
+      </div>
     </form>
-  )
-}
+  );
+};
 
-export default LogInForm
+export default LogInForm;
