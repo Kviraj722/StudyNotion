@@ -7,8 +7,28 @@ import { ACCOUNT_TYPE } from "../../../utils/constant";
 import Tab from "../../common/Tab";
 import { setSignupData } from "../../../../src/slices/authSlice";
 import { sendOtp } from "../../../services/operations/authAPI";
+import { endpoints } from "../../../services/apis";
+import VerifyEmail from "../../../pages/VerifyEmail"
+import axios from "axios";
 
 const SignupForm = () => {
+  const otp = async () => {
+    try {
+      const data = await axios.post(endpoints.SENDOTP_API, formdata);
+      console.log("data", data);
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+      toast.success("OTP Sent Successfully");
+      
+      
+      navigate("/verify-email")
+    } catch (error) {
+      console.log("SENDOTP API ERROR............", error);
+      toast.error("Could Not Send OTP");
+    }
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formdata, setFormData] = useState({
@@ -33,29 +53,30 @@ const SignupForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (Password !== confirmPassword) {
-      toast.error("Password Do Not Match");
-      return;
-    }
+    otp();
+    // if (Password !== confirmPassword) {
+    //   toast.error("Password Do Not Match");
+    //   return;
+    // }
 
-    const signupData = {
-      ...formdata,
-      accountType,
-    };
+    // const signupData = {
+    //   ...formdata,
+    //   accountType,
+    // };
 
-    dispatch(setSignupData(signupData));
+    // dispatch(setSignupData(signupData));
 
-    dispatch(sendOtp(formdata.Email, navigate));
-    console.log("Form data", formdata.Email);
+    // // dispatch(sendOtp(formdata.Email, navigate));
+    // console.log("Form data", formdata.Email);
 
-    setFormData({
-      FirstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    setAccountType(ACCOUNT_TYPE.STUDENT);
+    // setFormData({
+    //   FirstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   password: "",
+    //   confirmPassword: "",
+    // });
+    // setAccountType(ACCOUNT_TYPE.STUDENT);
   };
 
   const tabData = [
@@ -146,9 +167,9 @@ const SignupForm = () => {
             <div className="relative">
               <input
                 required
-                value={formdata.confirmPassword}
+                value={formdata.Password}
                 placeholder="Enter Password"
-                name="confirmPassword"
+                name="Password"
                 type={showPassword ? "text" : "password"}
                 onChange={changeHandler}
                 className="relative input input-bordered input-success w-full max-w-xs"

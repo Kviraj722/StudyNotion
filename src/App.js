@@ -4,11 +4,12 @@ import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar";
 import Login from "../src/pages/Login";
 import Signup from "../src/pages/Signup";
-
+import About from "../src/pages/About";
 import OpenRoute from "./components/core/Auth/openRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -55,6 +56,22 @@ function App() {
           element={
             <OpenRoute>
               <VerifyEmail />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="about"
+          element={
+            <OpenRoute>
+              <About />
+            </OpenRoute>
+          }
+        />
+        <Route
+          path="contact"
+          element={
+            <OpenRoute>
+              <ContactUs />
             </OpenRoute>
           }
         />

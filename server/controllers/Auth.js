@@ -39,7 +39,7 @@ exports.sendOTP = async (req, res) => {
     //created an entry for otp
     const otpPayLoad = { email, otp };
     const otpBody = await OTP.create(otpPayLoad);
-    console.log("otp body ", otpBody);
+
     //return response successfull
     res.status(200).json({
       success: true,
@@ -101,8 +101,7 @@ exports.signup = async (req, res) => {
 
 
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    console.log("response", response);
-    console.log("OTP", otp);
+    
 
     if (response.length === 0) {
       // OTP not found for the email
@@ -129,7 +128,7 @@ exports.signup = async (req, res) => {
       gender: null,
       dateOfBirth: null,
       about: null,
-      contactNumber: null,
+      contactNumber: contactNumber,
     });
     const user = await User.create({
       firstName,
@@ -261,7 +260,7 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       );
-      console.log("Email sent successfully:", emailResponse.response);
+      
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
       console.error("Error occurred while sending email:", error);

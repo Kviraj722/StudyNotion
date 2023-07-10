@@ -38,7 +38,7 @@ const ExploreMore = () => {
       </p>
       <div className="flex justify-center">
         <div
-          className="mt-5 flex rounded-full bg-richblack-800 mb-5 border-richblack-100
+          className="mt-5 flex rounded-full bg-richblack-800  border-richblack-100
         px-1 py-1 "
         >
           {tabsName.map((element, index) => {
@@ -65,7 +65,7 @@ const ExploreMore = () => {
 
       {/* course card ka group */}
 
-      <div className='absolute flex flex-row gap-10 justify-between w-full'>
+      <div className='absolute flex flex-row gap-10 justify-center w-full'>
         {
             courses.map(  (element, index) => {
                 return (

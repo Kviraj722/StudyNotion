@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { AiFillEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../../../services/operations/authAPI";
-
+// import { useDispatch } from "react-redux";
+// import { login } from "../../../services/operations/authAPI";
+import axios from "axios";
+import { endpoints } from "../../../services/apis";
+import { toast } from "react-hot-toast";
+// import { Navigate } from "react-router-dom";
 const LogInForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -22,10 +25,22 @@ const LogInForm = () => {
     }));
   };
   const { email, password } = formData;
-
+  const login = async () => {
+    try {
+      toast.loading("loading..")
+      const Data = await axios.post(endpoints.LOGIN_API, formData);
+      console.log("data", Data);
+      toast.success("Login successfully!");
+      navigate("/dashboard");
+    } catch (error) {
+      console.log("Error", error);
+      toast.dismiss(error.message);
+    }
+  };
   const submithandler = (event) => {
     event.preventDefault();
-    dispatch(login(email, password, navigate));
+    // dispatch(login(email, password, navigate));
+    login();
   };
   return (
     <form
@@ -52,7 +67,7 @@ const LogInForm = () => {
         <label className="w-full relative">
           <p className="text-[0.875rem] text-richblack-5 mb-1 ml-4 leading-[1.375rem]">
             Password
-            <sup className="text-[#EF476F]"> *</sup>{" "}
+            <sup className="text-[#EF476F]"> *</sup>
           </p>
           <div className="relative">
             <input
@@ -71,7 +86,9 @@ const LogInForm = () => {
               {setShowPassword ? <AiFillEyeInvisible /> : <AiOutlineEye />}
             </span>
             <Link to={"/forgot-password"}>
-              <p className="text-center text-sm ml-8 mt-3 text-primary-focus">Forgot Password?</p>
+              <p className="text-center text-sm ml-8 mt-3 text-primary-focus">
+                Forgot Password?
+              </p>
             </Link>
           </div>
         </label>

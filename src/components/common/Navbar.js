@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { NavbarLinks } from "../../data/navbar-links";
 import { useSelector } from "react-redux";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
-import { apiConnector } from "../../services/apiconnector";
-import { categories } from "../../services/apis";
+// import { apiConnector } from "../../services/apiconnector";
+// import { categories } from "../../services/apis";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
+// import { IoIosArrowDropdownCircle } from "react-icons/io";
 
 const subLinks = [
   {
@@ -79,10 +79,7 @@ function Navbar() {
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
-                  <div
-                    className="relative 
-                  flex items-center gap-2 group"
-                  >
+                  <div className="relative flex items-center gap-2 group">
                     <p>{link.title}</p>
                     <BsChevronCompactDown />
                     <div
@@ -135,16 +132,12 @@ function Navbar() {
           )}
           {token === null && (
             <Link to="/login">
-              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
-                Log in
-              </button>
+              <button className="btn btn-primary btn-sm">Log in</button>
             </Link>
           )}
           {token === null && (
             <Link to="/signup">
-              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
-                Sign Up
-              </button>
+              <button className="btn btn-sm">Sign Up</button>
             </Link>
           )}
           {token !== null && <ProfileDropDown />}
